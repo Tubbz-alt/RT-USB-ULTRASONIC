@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="265" key="DIALOG_WIDTH"/>
+		<item value="157" key="DIALOG_Y_ORIGIN"/>
+		<item value="399" key="DIALOG_HEIGHT"/>
+		<item value="925" key="DIALOG_X_ORIGIN"/>
+		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="elapsed_time_count" key="selection"/>
+		<list key="findhistory">
+			<item value="elapsed_time_count"/>
+			<item value="TIMER32_0_IRQHandler"/>
+			<item value="I2CMasterBuffer"/>
+			<item value="I2CInit"/>
+			<item value="I2CSlaveBuffer"/>
+			<item value="bme280_read_uncomp"/>
+			<item value="bme280_read_uncomp_temperature"/>
+			<item value="v_uncomp_temperature_s32"/>
+		</list>
+		<list key="replacehistory">
+		</list>
+	</section>
+</section>

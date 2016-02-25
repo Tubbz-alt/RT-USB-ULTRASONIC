@@ -1,0 +1,73 @@
+/**
+ * @file   srf02.c
+ * @brief  srf02を使えるようにするための関数群 <br>
+ *
+ * @author RTCorp. Ryota Takahashi
+ */
+
+
+#include "type.h"
+#include "srf02.h"
+#include "i2c.h"
+#include "uart.h"
+#include "SystemTickTimer.h"
+#include "debug.h"
+
+
+
+
+//i2cの操作に必要なもの達のextern宣言.  実体はi2c.cにある
+extern volatile uint8_t I2CMasterBuffer[BUFSIZE];
+extern volatile uint8_t I2CSlaveBuffer[BUFSIZE];
+extern volatile uint32_t I2CReadLength, I2CWriteLength;
+
+//srf02のアドレスとかの宣言
+#define Add_srf02 0xE0
+#define Command_register 0x00
+#define Result_register 0x02
+
+
+
+
+uint16_t getRangeData() {
+	//srf02からのデータ格納変数宣言
+	uint16_t range_high_byte;
+	uint16_t range_low_byte;
+	uint16_t range_data;
+
+	I2CWriteLength = 3;
+	I2CReadLength = 0;
+	I2CMasterBuffer[0] = 0xE0; //default sensor address
+	I2CMasterBuffer[1] = 0x00; //location
+	I2CMasterBuffer[2] = 0x51; //command 0x51にするとセンサーアドレスが変更される（なぜ？
+	I2CEngine();
+	wait1msec(5);
+
+	I2CWriteLength = 2;
+	I2CReadLength = 1;
+	I2CMasterBuffer[0] = 0xE0;
+	I2CMasterBuffer[1] = 0x02; //Address start MPU9150
+	I2CMasterBuffer[2] = 0xE1;
+	I2CEngine();
+
+	range_high_byte = I2CSlaveBuffer[0];
+
+	I2CWriteLength = 2;
+	I2CReadLength = 1;
+	I2CMasterBuffer[0] = 0xE0;
+	I2CMasterBuffer[1] = 0x03; //Address start MPU9150
+	I2CMasterBuffer[2] = 0xE1;
+	I2CEngine();
+	//myPrintfUSB("0x03 \t\t: %x\n\r", I2CSlaveBuffer[0]);
+	//wait1msec(5);
+	range_low_byte = I2CSlaveBuffer[0];
+
+	range_data = range_high_byte << 8;
+	range_data = range_data | range_low_byte;
+
+	return range_data;
+	//myPrintfUSB("%d,%d\n\r", elapsed_time,range_data);
+}
+
+
+
